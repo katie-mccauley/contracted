@@ -39,6 +39,7 @@ namespace contracted.Repositories
       List<CompanyViewModel> company = _db.Query<Contractor, Job, CompanyViewModel, CompanyViewModel>(sql, (con, j, com) =>
       {
         com.JobId = j.Id;
+        com.CompanyName = con.Name;
         return com;
       }, new { contractId }).ToList();
       return company;

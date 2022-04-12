@@ -9,5 +9,6 @@ namespace contracted.Models
   public class ContractorViewModel : Contractor
   {
     public int JobId { get; set; }
+    public string CompanyName { get; set; }
   }
 }
