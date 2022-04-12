@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using contracted.Models;
 using contracted.Repositories;
 
@@ -20,6 +21,9 @@ namespace contracted.Services
       return _repo.GetViewModelById(id);
     }
 
-
+    internal List<CompanyViewModel> GetCompaniesByContractorId(int contractId)
+    {
+      return _repo.GetCompaniesByContractorId(contractId);
+    }
   }
 }
