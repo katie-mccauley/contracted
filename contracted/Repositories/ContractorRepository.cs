@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -43,6 +44,50 @@ namespace contracted.Repositories
         return com;
       }, new { contractId }).ToList();
       return company;
+    }
+
+    internal string Remove(int contractId)
+    {
+      string sql = @"
+      DELETE FROM contractors WHERE id = @contractId LIMIT 1;
+      ";
+      int removedRow = _db.Execute(sql, new { contractId });
+      if (removedRow > 0)
+      {
+        return "DELETED";
+      }
+      throw new Exception("could not deletes this contractor");
+    }
+
+    internal Contractor Create(Contractor contractorData)
+    {
+      string sql = @"
+      INSERT INTO contractors
+      (name)
+      VALUES 
+      (@Name);
+      SELECT LAST_INSERT_ID();
+      ";
+      int id = _db.ExecuteScalar<int>(sql, contractorData);
+      contractorData.Id = id;
+      return contractorData;
+    }
+
+    internal Contractor GetById(int contractId)
+    {
+      string sql = @"
+      SELECT * FROM contractors WHERE id = @contractId;
+      ";
+      return _db.Query<Contractor>(sql, new { contractId }).FirstOrDefault();
+    }
+
+    internal List<Contractor> GetAll()
+    {
+      string sql = @"
+      SELECT 
+      * FROM contractors;
+      ";
+      return _db.Query<Contractor>(sql).ToList();
     }
   }
 }
