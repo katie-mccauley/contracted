@@ -52,5 +52,13 @@ namespace contracted.Services
       Contractor contractor = _repo.GetById(contractId);
       return _repo.Remove(contractId);
     }
+
+    internal Contractor Update(Contractor contractorData)
+    {
+      Contractor contractor = GetById(contractorData.Id);
+      contractor.Name = contractorData.Name;
+      _repo.Update(contractorData);
+      return contractor;
+    }
   }
 }

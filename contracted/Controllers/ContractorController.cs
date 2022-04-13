@@ -95,5 +95,23 @@ namespace contracted.Controllers
       }
     }
 
+    [HttpPut("{contractId}")]
+    [Authorize]
+    public async Task<ActionResult<Contractor>> Update([FromBody] Contractor contractorData, int contractId)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        contractorData.Id = contractId;
+        return Ok(_cs.Update(contractorData));
+      }
+      catch (Exception e)
+      {
+
+        return BadRequest(e.Message);
+
+      }
+    }
+
   }
 }

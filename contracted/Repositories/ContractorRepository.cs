@@ -56,7 +56,18 @@ namespace contracted.Repositories
       {
         return "DELETED";
       }
-      throw new Exception("could not deletes this contractor");
+      throw new Exception("could not deletes this recipe");
+    }
+
+    internal void Update(Contractor contractorData)
+    {
+      string sql = @"
+      UPDATE contractors 
+        SET 
+        name = @Name
+        WHERE id = @Id;
+      ";
+      _db.Execute(sql, contractorData);
     }
 
     internal Contractor Create(Contractor contractorData)
